@@ -22,3 +22,6 @@ spec:
     params:                     # 引用该 task 时候，为该 task 引用参数，也是引用的 pipeline 中的参数
     - name: git-repo            # task 参数名
       value: $(params.git-url)  # 引用的参数值是 pipeline:params:git-url
+
+  # 运行 tkn pipeline start --showlog pipeline-source-lister -p git-url=https://github/xxxx/xxxx -w name=codebase,emptyDir="" 进程测试
+  # 因为该 pipeline 只引用了一个 task 因此依然可以使用 emptyDir 作为 workspace 的后端存储
