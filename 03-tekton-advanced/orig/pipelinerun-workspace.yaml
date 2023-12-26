@@ -58,4 +58,4 @@ spec:
           resources:
             requests:
               storage: 1Gi          # 申请的存储的大小，只要有大于 1Gi 的PV 存在就可以绑定
-          storageClassName: nfs-csi # 使用的存储类型是 nfs
+          storageClassName: nfs-csi # 使用的存储类是 nfs-csi,是一个 storageClass 对象，它是一个 nfs 驱动会自动帮你创建 pvc 和 pv
