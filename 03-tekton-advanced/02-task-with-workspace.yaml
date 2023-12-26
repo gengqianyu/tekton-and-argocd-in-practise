@@ -7,6 +7,9 @@ spec:
   - name: git-repo                            # 参数名
     type: string                              # 参数类型
     description: Git repository to be cloned  # 参数描述，没有定义默认值
+  # 运行此 task 时使用以下命令
+  # tkn task start --showlog source-lister -p target="magedu.com" -w name=source,emptyDir=""
+  # 使用 -w 参数为 workspace 工作空间，定义后端存储，name=source 表示为一个名为 source workspace 指定后端存储，emptyDir="" 表示让 pipelines 自行去创建 emptyDir。
   workspaces:                                 # 声明 workspace
   - name: source                              # workspace 名称，没定义挂载点，默认使用默认挂载点
   steps:                                      # 在两个 step 之间共享 数据

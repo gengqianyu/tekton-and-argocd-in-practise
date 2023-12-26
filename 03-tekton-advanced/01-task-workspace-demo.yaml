@@ -24,7 +24,7 @@ spec:
         echo "Volume Name: $(workspaces.messages.volume)"
   # 运行此 task 时使用以下命令
   # tkn task start --showlog workspace-demo -p target="magedu.com" -w name=messages,emptyDir=""
-  # 使用 -w 参数为 workspace 工作空间，定义后端存储，emptyDir="" 表示让 pipelines 自行去创建 emptyDir。
+  # 使用 -w 参数为 workspace 工作空间，定义后端存储，name=messages 表示为一个名为 message workspace 指定存储，emptyDir="" 表示让 pipelines 自行去创建 emptyDir。
   workspaces:           # 声明 workspace 工作空间列表
     - name: messages    # workspace 的名称
       description: |

@@ -3,19 +3,22 @@ kind: Pipeline
 metadata:
   name: pipeline-source-lister
 spec:
-  workspaces:
+  workspaces:                   # pipeline 工作空间声明
   - name: codebase
-  params:
-  - name: git-url
-    type: string
+
+  params:                       # pipeline 参数 声明
+  - name: git-url               # 参数名称
+    type: string                # 参数类型
     description: Git repository url to be cloned
-  tasks:
+  tasks:                        #
   - name: git-clone
     taskRef:
-      name: source-lister
-    workspaces:
-    - name: source
-      workspace: codebase
-    params:
-    - name: git-repo
-      value: $(params.git-url)
+      name: source-lister       # 引用的独立的 task
+
+    workspaces:                 # 引用该 task 时候为该 task 引用一个 workspace
+    - name: source              # task workspace name
+      workspace: codebase       # 引用的是 pipeline workspace codebase，
+                                # 运行 pipeline 的时候无法直接给 task 传参数，因此 task 的参数都是引用 pipeline 的
+    params:                     # task 执行所需的参数，必须在 pipeline 中给它传递过去
+    - name: git-repo            # task 参数名
+      value: $(params.git-url)  # 引用的参数值是 pipeline:params:git-url
