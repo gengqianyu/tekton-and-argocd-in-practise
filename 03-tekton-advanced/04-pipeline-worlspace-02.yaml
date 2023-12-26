@@ -50,13 +50,13 @@ spec:
     - name: git-url
       #value: https://gitee.com/mageedu/spring-boot-helloWorld.git
       value: http://code.gitlab.svc/root/spring-boot-helloWorld.git
-  workspaces:
-    - name: codebase
-      volumeClaimTemplate:
+  workspaces:                       # workspace 工作空间 声明
+    - name: codebase                # workspace 名称
+      volumeClaimTemplate:          # 动态向 StorageClass:nfs-csi 申请 pvc 持久化存储
         spec:
-          accessModes:
-            - ReadWriteOnce
+          accessModes:              # 访问模式
+            - ReadWriteOnce         # 以读写方式挂载一次
           resources:
             requests:
-              storage: 1Gi
-          storageClassName: nfs-csi
+              storage: 1Gi          # 申请的存储的大小，只要有大于 1Gi 的PV 存在就可以绑定
+          storageClassName: nfs-csi # 使用的存储类是 nfs-csi,是一个 storageClass 对象，它是一个 nfs 驱动会自动帮你创建 pvc 和 pv
