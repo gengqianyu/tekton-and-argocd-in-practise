@@ -16,7 +16,8 @@ spec:
       params:
       - name: text
         value: "Executed after task-A"
-      runAfter: ["task-a"]
+      runAfter:
+        - "task-a"
     - name: task-c
       taskRef:
         name: logger

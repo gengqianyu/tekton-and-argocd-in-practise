@@ -1,14 +1,14 @@
 apiVersion: tekton.dev/v1beta1
-kind: Pipeline
+kind: Pipeline                  # Pipeline 流水线对象
 metadata:
   name: pipeline-demo
 spec:
-  tasks:
+  tasks:                        # task 列表声明，可以编排 task 的执行顺序，不规定执行顺序，所有 task 并发执行
     - name: first-task
-      taskRef:
+      taskRef:                  # task 引用 声明
         name: hello
     - name: second-task
-      taskRef:
+      taskRef:                  # task 引用 声明
         name: multiple
-      runAfter:
-        - first-task
+      runAfter:                 # 声明在那个 task 执行结束以后才能执行当前 task，
+        - first-task            # 可以指定多个 task，表示多个 task 执行完毕以后才能运行，整体定义的是一个有向无环图。

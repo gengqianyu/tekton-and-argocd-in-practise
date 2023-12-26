@@ -6,13 +6,18 @@ spec:
   params:
     - name: text
       type: string
-  tasks:
+    - name: target
+      type: string
+  tasks:                          # task 列表声明，可以编排 task 的执行顺序，不规定执行顺序，所有 task 并发执行
     - name: task-one
       taskRef:
         name: hello-params
+      params:
+        - name: target
+          value: $(params.target)
     - name: task-two
       taskRef:
         name: logger
-      params:
+      params:                     # 参数引用
         - name: text
-          value: $(params.text)
+          value: $(params.text)   # 参数引用

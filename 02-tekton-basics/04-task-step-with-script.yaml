@@ -6,7 +6,7 @@ spec:
   steps:
     - name: step-with-script
       image: alpine:3.15
-      script: |
+      script: |                   # 执行多行脚本声明，apk add curl 在alpine 中安装 curl
         #!/bin/sh
         echo "Step with Script..."
         echo "Installing necessary tooling"

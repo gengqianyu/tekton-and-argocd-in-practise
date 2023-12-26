@@ -4,7 +4,8 @@ metadata:
   name: pipeline-demo-run-xxxxx
   namespace: default
 spec:
-  pipelineRef:
+  pipelineRef:                  # 引用的要执行的 pipeline
     name: pipeline-demo
   serviceAccountName: default
-  timeout: 1h0m0s
+  timeout: 1h0m0s               # 流水线执行超时时间
+  #

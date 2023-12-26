@@ -3,14 +3,16 @@ kind: Task
 metadata:
   name: hello-params
 spec:
-  params:
-    - name: target
-      type: string
-      description: Name of somebody or something to greet
-      default: MageEdu.Com
-  steps:
+  params:                   # 参数声明
+    - name: target          # 参数名称
+      type: string          # 参数类型，有两种 string 和 array
+      description: Name of somebody or something to greet # 参数的注释
+      default: MageEdu.Com  # 默认值，不给 target 形参 传实参 的时候的默认值
+  steps:                    # 声明 step
     - name: say-hello
       image: alpine:3.15
-      command:
+      command:              # 要执行的命令
         - /bin/sh
-      args: ['-c', 'echo Hello $(params.target)']
+      args: ['-c', 'echo Hello $(params.target)']   # 引用上面定义的参数，执行 taskRun 的时候，才会引用参数
+      # 执行使用 tkn task start hello-parms --showlog 可以直接输出显示的结果
+      # 还可以使用 -p target=gengqianyu 的方式穿参数

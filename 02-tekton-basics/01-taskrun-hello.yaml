@@ -1,8 +1,10 @@
+---
+# 此文件可以使用 tkn task start hello --dry-run 去生成
 apiVersion: tekton.dev/v1beta1
-kind: TaskRun
+kind: TaskRun                 # 用于运行 task:hello 的对象
 metadata:
   name: hello-run-00001
 spec:
-  taskRef:
+  taskRef:                    # 引用的 task，部署此 TaskRun 的时候，会运行 task:hello
     kind: Task
     name: hello

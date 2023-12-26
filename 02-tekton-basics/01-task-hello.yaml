@@ -1,9 +1,9 @@
 apiVersion: tekton.dev/v1beta1
-kind: Task
+kind: Task                              # Task 任务对象声明
 metadata:
   name: hello
 spec:
-  steps:
+  steps:                                # step 列表，一个 step 就是一个容器
     - name: say-hello
       image: alpine:3.15
       command: ['/bin/sh']

@@ -13,16 +13,22 @@ spec:
       script: |
         #!/bin/sh
         set -xe
+        # 判断 workspace 是否成功绑定了后端存储卷
         if [ "$(workspaces.messages.bound)" == "true" ] ; then
+          # 生成一个新文件保存在 挂载点
           echo "Hello $(params.target)" > $(workspaces.messages.path)/message
           cat $(workspaces.messages.path)/message
         fi
         echo "Mount Path: $(workspaces.messages.path)"
+        # 打印绑定的后端存储卷的名称，如果是 pvc 就是 pvc 的名称，如果是 emptyDir 就是 emptyDir 的名称。
         echo "Volume Name: $(workspaces.messages.volume)"
-  workspaces:
-    - name: messages
+  # 运行此 task 时使用以下命令
+  # tkn task start --showlog workspace-demo -p target="magedu.com" -w name=messages,emptyDir=""
+  # 使用 -w 参数为 workspace 工作空间，定义后端存储，emptyDir="" 表示让 pipelines 自行去创建 emptyDir。
+  workspaces:           # 声明 workspace 工作空间列表
+    - name: messages    # workspace 的名称
       description: |
-        The folder where we write the message to. If no workspace
-        is provided then the message will not be written.
-      optional: true
-      mountPath: /data
+        The folder where we write the message to. 
+        If no workspace is provided then the message will not be written.
+      optional: true    # 是否为可选工作空间
+      mountPath: /data  # 自定义的工作空间挂载点
