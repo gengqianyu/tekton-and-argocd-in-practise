@@ -49,13 +49,13 @@ spec:
   params:
     - name: git-url
       value: https://gitee.com/mageedu/spring-boot-helloWorld.git
-  workspaces:
-    - name: codebase
-      volumeClaimTemplate:
+  workspaces:                       # workspace 声明
+    - name: codebase                # workspace 名称
+      volumeClaimTemplate:          # 卷动态申请模版声明
         spec:
-          accessModes:
-            - ReadWriteOnce
+          accessModes:              # 访问模式
+            - ReadWriteOnce         # 以读写方式挂载一次
           resources:
             requests:
-              storage: 1Gi
-          storageClassName: nfs-csi
+              storage: 1Gi          # 申请的存储的大小，只要有大于 1Gi 的PV 存在就可以绑定
+          storageClassName: nfs-csi # 使用的存储类型是 nfs
