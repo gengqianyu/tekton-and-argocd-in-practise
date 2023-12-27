@@ -47,11 +47,11 @@ spec:
             workingDir: $(workspaces.source.path)/source
             volumeMounts:
               - name: m2
-                mountPath: /root/.m2
+                mountPath: /root/.m2      # 卷被挂载的位置。用于保存 mave 编译的 jar 包
             script: mvn clean install
         workspaces:
           - name: source
-        volumes:
+        volumes:                          # 声明卷
           - name: m2
             persistentVolumeClaim:
               claimName: maven-cache      # 引用 pvc:maven-cache

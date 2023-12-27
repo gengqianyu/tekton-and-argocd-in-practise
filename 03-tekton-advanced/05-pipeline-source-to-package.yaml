@@ -13,7 +13,7 @@ spec:
       params:
         - name: url
           value: $(params.git-url)
-      taskSpec:
+      taskSpec:                     # 内联定义 task
         workspaces:
           - name: source
         params:
