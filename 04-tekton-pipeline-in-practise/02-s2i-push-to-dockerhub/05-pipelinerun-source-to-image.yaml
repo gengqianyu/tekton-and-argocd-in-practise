@@ -23,5 +23,5 @@ spec:
               storage: 1Gi
           storageClassName: nfs-csi
     - name: docker-config
-      secret:
+      secret:                           # 引用的是一个 secret 对象，里面有访问我们私有仓库的账号和密码。
         secretName: docker-config

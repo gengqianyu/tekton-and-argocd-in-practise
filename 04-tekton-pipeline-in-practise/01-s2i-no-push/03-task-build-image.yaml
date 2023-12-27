@@ -1,10 +1,10 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: image-build
+  name: image-build               # 构建镜像的 task
 spec:
   description: package the application files to image
-  params:
+  params:                         # 参数声明
     - name: dockerfile
       description: The path to the dockerfile to build (relative to the context)
       default: Dockerfile
@@ -13,16 +13,16 @@ spec:
     - name: image-tag
       description: Tag to apply to the built image
       default: latest
-  workspaces:
+  workspaces:                   # 工作空间
     - name: source
-  steps:
+  steps:                        # step 声明
     - name: build-and-push-image
-      image: gcr.io/kaniko-project/executor:debug
+      image: gcr.io/kaniko-project/executor:debug   # kaniko-project 项目用于在 容器中 构建镜像，还有一个项目叫做 dind docker in docker
       securityContext:
         runAsUser: 0
       command:
-        - /kaniko/executor
+        - /kaniko/executor                            # 具体执行打镜像，并推送至镜像仓库的 程序
       args:
-        - --dockerfile=$(params.dockerfile)
-        - --context=$(workspaces.source.path)/source
-        - --no-push
+        - --dockerfile=$(params.dockerfile)           # 指定 dockerfile，使用参数引用的方式获取
+        - --context=$(workspaces.source.path)/source  # 构建上下文，执行 docker build 的路经
+        - --no-push                                   # 仅构建镜像不推送

@@ -30,3 +30,8 @@ spec:
         - --dockerfile=$(params.dockerfile)
         - --context=$(workspaces.source.path)/source
         - --destination=$(params.image-url):$(params.image-tag)
+#        - --registry-certificate=harbor.gengqianyu.com=/path/to/the/certificate.cert
+#  --skip-tls-verify：push到注册表时跳过 TLS 证书验证。
+#  --skip-tls-verify-pull：在从注册表中pull时跳过 TLS 证书验证
+#  --skip-tls-verify-registry：您可以设置--skip-tls-verify-registry 在访问指定注册表时跳过 TLS 证书验证
+

@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: build-to-package
+  name: build-to-package        # 编译代码并生成 buildid
 spec:
   description: build application and package the files to image
   workspaces:

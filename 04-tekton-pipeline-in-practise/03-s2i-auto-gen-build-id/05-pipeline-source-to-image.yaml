@@ -61,6 +61,6 @@ spec:
           workspace: codebase
         - name: dockerconfig
           workspace: docker-config
-      runAfter:
+      runAfter:                     # 最后这个 task 执行需要在 generate-build-id 和 build-to-package 两个 task 执行完以后执行
         - generate-build-id
         - build-to-package

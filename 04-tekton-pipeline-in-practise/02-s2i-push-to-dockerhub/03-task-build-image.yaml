@@ -17,18 +17,19 @@ spec:
     - name: source
     - name: dockerconfig
       # Secret resource which contains identity to image registry
-      mountPath: /kaniko/.docker
+      mountPath: /kaniko/.docker                                  # 将镜像推送至私有仓库的用户名和密码
   steps:
     - name: image-build-and-push
-      image: gcr.io/kaniko-project/executor:debug
+      image: gcr.lank8s.cn/kaniko-project/executor:latest
       securityContext:
         runAsUser: 0
       env:
-        - name: DOCKER_CONFIG
+        - name: DOCKER_CONFIG                                     # 配置环境变量，有 docker 的认证信息
           value: /kaniko/.docker
       command:
         - /kaniko/executor
       args:
-        - --dockerfile=$(params.dockerfile)
+        - --dockerfile=$(params.dockerfile)                       # Dockerfile 文件路经
         - --context=$(workspaces.source.path)/source
-        - --destination=$(params.image-url):$(params.image-tag)
+        - --destination=$(params.image-url):$(params.image-tag)   # 推送的镜像仓库路经
+#        - --skip-tls-ver                                         # 跳过验证对端 tls 证书

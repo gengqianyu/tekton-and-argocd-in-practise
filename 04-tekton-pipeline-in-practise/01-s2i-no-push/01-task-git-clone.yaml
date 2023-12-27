@@ -1,10 +1,10 @@
 apiVersion: tekton.dev/v1beta1
-kind: Task
+kind: Task                        # task 对象声明
 metadata:
-  name: git-clone
+  name: git-clone                 # 克隆项目源代码的 task
 spec:
   description: Clone the code repository to the workspace. 
-  params:
+  params:                         # 参数声明
     - name: url
       type: string
       description: git url to clone
@@ -13,10 +13,10 @@ spec:
       type: string
       description: git branch to checkout
       default: "main"
-  workspaces:
+  workspaces:                       # 工作空间声明
     - name: source
       description: The git repo will be cloned onto the volume backing this workspace
-  steps:
+  steps:                            # step 声明
     - name: git-clone
       image: alpine/git:v2.36.1
-      script: git clone -b $(params.branch) -v $(params.url) $(workspaces.source.path)/source
+      script: git clone -b $(params.branch) -v $(params.url) $(workspaces.source.path)/source # 克隆代码
