@@ -1,12 +1,12 @@
 apiVersion: triggers.tekton.dev/v1beta1
-kind: EventListener
+kind: EventListener                   # webhook eventSource，运行为一个 pod 监听 gitlab 推过来的 event
 metadata:
   name: gitlab-event-listener
 spec:
   serviceAccountName: tekton-triggers-gitlab-sa
   triggers:
   - name: gitlab-push-events-trigger
-    interceptors:
+    interceptors:                     # 连接器
     - ref:
         name: "gitlab"
       params:

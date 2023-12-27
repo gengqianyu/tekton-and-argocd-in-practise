@@ -117,7 +117,7 @@ spec:
     - name: source
       description: The git repo
   params:
-    - name: deploy-config-file
+    - name: deploy-config-file    # 部署清单的名称
       description: The path to the yaml file to deploy within the git source
     - name: image-url
       description: Image name including repository

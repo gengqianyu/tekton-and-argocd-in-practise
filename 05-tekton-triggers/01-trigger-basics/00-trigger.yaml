@@ -1,0 +1,20 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: trigger
+spec:
+  interceptors:
+    - ref:
+        name: "gitlab"
+      params:
+        - name: "secretRef"
+          value:
+            secretName: foo
+            secretKey: bar
+        - name: "eventTypes"
+          value:
+            - "Push Hook"
+bindings:
+  - ref: pipeline-binding-demo
+template:
+  - ref: pipeline-template-demo

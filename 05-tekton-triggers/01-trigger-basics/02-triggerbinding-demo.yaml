@@ -5,8 +5,8 @@ metadata:
 spec:
   params:
   - name: git-url
-    value: $(body.head_commit.id)
+    value: $(body.head_commit.id)   #
   - name: image-url
-    value: $(body.repository.url)
+    value: $(body.repository.url)   #
   - name: version
-    value: $(header.Content-Type)
+    value: $(header.Content-Type)   #

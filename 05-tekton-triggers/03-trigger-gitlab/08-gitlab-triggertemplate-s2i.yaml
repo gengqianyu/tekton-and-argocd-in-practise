@@ -3,7 +3,7 @@ kind: TriggerTemplate
 metadata:
   name: s2i-tt
 spec:
-  params:  # 定义参数
+  params:                   # 定义参数 全部引用 TriggerBinding 的参数
   - name: git-revision
   - name: git-repo-url
   - name: image-url

@@ -5,6 +5,6 @@ metadata:
 spec:
   params:
   - name: git-revision
-    value: $(body.checkout_sha)
+    value: $(body.checkout_sha)                 # 读取 事件中的字段
   - name: git-repo-url
-    value: $(body.repository.git_http_url)
+    value: $(body.repository.git_http_url)      # 读取 事件中的字段

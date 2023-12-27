@@ -1,9 +1,9 @@
 apiVersion: triggers.tekton.dev/v1alpha1
-kind: TriggerTemplate
+kind: TriggerTemplate                         # 触发器模版声明
 metadata:
   name: pipeline-template-demo
 spec:
-  params:
+  params:                                     # 参数声明
     - name: image-url
       default: ikubernetes/spring-boot-helloworld
     - name: git-revision
@@ -13,7 +13,7 @@ spec:
       description: The git repository url ("https://github.com/foo/bar.git")
     - name: version
       description: The version of application
-  resourcetemplates:
+  resourcetemplates:                            # PipelineRun 模版声明
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
       metadata:
@@ -23,7 +23,7 @@ spec:
           name: source-to-image
         params:
           - name: git-url
-            value: $(tt.params.git-url)
+            value: $(tt.params.git-url)         # 引用都是 tt 的参数
           - name: image-url
             value: $(tt.params.image-url)
           - name: version

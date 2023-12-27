@@ -3,7 +3,7 @@ kind: TriggerTemplate
 metadata:
   name: gitlab-trigger-template
 spec:
-  params:  # 定义参数
+  params:                                 # 定义参数
   - name: git-revision
   - name: git-repo-url
   resourcetemplates:

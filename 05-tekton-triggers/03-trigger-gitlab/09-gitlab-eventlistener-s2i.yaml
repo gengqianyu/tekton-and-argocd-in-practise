@@ -4,9 +4,9 @@ metadata:
   name: s2i-listener 
 spec:
   serviceAccountName: tekton-triggers-gitlab-sa
-  triggers:
+  triggers:                           # triggers 定义
   - name: gitlab-push-events-trigger
-    interceptors:
+    interceptors:                     # 拦截器定义，关心那类事件
     - ref:
         name: "gitlab"
       params:
@@ -19,7 +19,7 @@ spec:
           - "Push Hook"
           - "Tag Push Hook"
           - "Merge Request Hook"
-    bindings:
+    bindings:                       # 关联 TriggerBinding
     - ref: s2i-binding
-    template:
+    template:                       # 关联 TriggerTemplate
       ref: s2i-tt
