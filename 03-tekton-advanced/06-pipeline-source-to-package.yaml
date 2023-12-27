@@ -1,9 +1,9 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolumeClaim     # 持久化存储卷申请 资源对象
 metadata:
-  name: maven-cache
+  name: maven-cache             # pvc 的名称
 spec:
-  storageClassName: nfs-csi
+  storageClassName: nfs-csi     # pv是借助与 nfs-csi 创建并绑定的
   accessModes:
     - ReadWriteMany
   resources:
@@ -54,7 +54,7 @@ spec:
         volumes:
           - name: m2
             persistentVolumeClaim:
-              claimName: maven-cache
+              claimName: maven-cache      # 引用 pvc:maven-cache
       workspaces:
         - name: source
           workspace: codebase

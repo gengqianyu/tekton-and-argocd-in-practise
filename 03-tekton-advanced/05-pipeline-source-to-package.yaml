@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: source-2-package
+  name: source-2-package      # 源码 to 编译
 spec:
   params:
     - name: git-url
@@ -9,7 +9,7 @@ spec:
   workspaces:
     - name: codebase
   tasks:
-    - name: fetch-from-source
+    - name: fetch-from-source   #
       params:
         - name: url
           value: $(params.git-url)
@@ -32,7 +32,7 @@ spec:
         steps:
           - name: build
             image: maven:3.8-openjdk-11-slim
-            workingDir: $(workspaces.source.path)/source
+            workingDir: $(workspaces.source.path)/source    # maven 编译代码的工作目录
             script: |
               mvn clean install
         workspaces:
@@ -42,11 +42,11 @@ spec:
           workspace: codebase
 ---
 apiVersion: tekton.dev/v1beta1
-kind: PipelineRun
+kind: PipelineRun                   # 运行上面的 pipeline
 metadata:
   name: source-2-package-run-001
 spec:
-  pipelineRef:
+  pipelineRef:                      # 引用要运行的 pipeline
     name: source-2-package
   params:
     - name: git-url
