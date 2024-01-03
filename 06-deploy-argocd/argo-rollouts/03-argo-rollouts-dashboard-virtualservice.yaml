@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: argo-rollouts-dashboard-gateway
-  namespace: istio-system
+  namespace: istio-system                 # 方便查看发布了那些服务
 spec:
   selector:
     app: istio-ingressgateway
