@@ -4,27 +4,27 @@ metadata:
   name: spring-boot-helloworld
   namespace: argocd
 spec:
-  project: default
-  source:
+  project: default          # app 所需项目，默认为 default
+  source:                   # git 源声明
     repoURL: https://gitee.com/mageedu/spring-boot-helloworld-deployment.git
-    targetRevision: HEAD
-    path: deploy/kubernetes
-  destination:
+    targetRevision: HEAD    # 使用最近的一次提交，可以使用具体的 commit
+    path: deploy/kubernetes # 部署文件路经
+  destination:              # 目标 k8s 集群声明
     server: https://kubernetes.default.svc
-    namespace: helloworld
-  syncPolicy:
-    automated: 
-      prune: true
-      selfHeal: true
+    namespace: helloworld   # 部署到的 名称空间
+  syncPolicy:               # 同步策略声明
+    automated:              # 自动同步
+      prune: true           # 是否修剪
+      selfHeal: true        # 是否自愈
       allowEmpty: false
     syncOptions:
-    - Validate=false
-    - CreateNamespace=true
+    - Validate=false        # 是否校验
+    - CreateNamespace=true  # 是否自动创建 namespace
     - PrunePropagationPolicy=foreground
     - PruneLast=true
-    retry:
+    retry:                  # 重试策略
       limit: 5
-      backoff:
+      backoff:              # 回退策略
         duration: 5s
         factor: 2
         maxDuration: 3m
