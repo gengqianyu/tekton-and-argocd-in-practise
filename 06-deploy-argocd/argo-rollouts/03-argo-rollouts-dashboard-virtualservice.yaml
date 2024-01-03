@@ -1,16 +1,5 @@
 ---
 apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: argo-rollouts-dashboard
-  namespace: argo-rollouts
-spec:
-  host: argo-rollouts-dashboard
-  trafficPolicy:
-    tls:
-      mode: DISABLE
----
-apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: argo-rollouts-dashboard-gateway
@@ -24,8 +13,8 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "argo-rollouts.magedu.com"
-    - "rollouts.magedu.com"
+    - "argo-rollouts.gengqianyu.com"
+    - "rollouts.gengqianyu.com"
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -34,8 +23,8 @@ metadata:
   namespace: argo-rollouts
 spec:
   hosts:
-  - "argo-rollouts.magedu.com"
-  - "rollouts.magedu.com"
+  - "argo-rollouts.gengqianyu.com"
+  - "rollouts.gengqianyu.com"
   gateways:
   - istio-system/argo-rollouts-dashboard-gateway
   http:
@@ -48,3 +37,13 @@ spec:
         port:
           number: 3100
 ---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: argo-rollouts-dashboard
+  namespace: argo-rollouts
+spec:
+  host: argo-rollouts-dashboard
+  trafficPolicy:
+    tls:
+      mode: DISABLE
