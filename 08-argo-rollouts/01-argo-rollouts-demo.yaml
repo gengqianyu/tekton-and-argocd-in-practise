@@ -4,12 +4,12 @@ kind: Rollout
 metadata:
   name: rollouts-spring-boot-helloworld
 spec:
-  replicas: 10 
-  strategy:
-    canary:
-      steps:
+  replicas: 10                        # 运行的 Pod 实例数量，默认为 1；
+  strategy:                           # 更新策略，支持 canary 和 blueGreen 两种
+    canary:                           # 这里采用金丝雀
+      steps:                          # canary 更新起见要执行的步骤
       - setWeight: 10 
-      - pause: {}
+      - pause: {}                     # 执行完第一步的更新以后，就会暂停，不指定暂停时间，就需要手动继续,kubectl argo rollouts promote rollouts-spring-boot-helloworld(rolloutsName)
       - setWeight: 20
       - pause: {duration: 20}
       - setWeight: 30
@@ -20,11 +20,11 @@ spec:
       - pause: {duration: 20}
       - setWeight: 80
       - pause: {duration: 20}
-  revisionHistoryLimit: 5
-  selector:
+  revisionHistoryLimit: 5                   # 更新历史中保留的 ReplicaSet Revision 数量
+  selector:                                 # 标签选择器,用于筛选 Pod 对象
     matchLabels:
       app: spring-boot-helloworld
-  template:
+  template:                                 # ReplicaSet 模板对象
     metadata:
       labels:
         app: spring-boot-helloworld

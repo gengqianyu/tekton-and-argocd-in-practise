@@ -18,11 +18,11 @@ spec:
         image: ikubernetes/spring-boot-helloworld:v0.9.2
         ports:
         - containerPort: 80
-  strategy:
-    blueGreen: 
-      activeService: spring-boot-helloworld
-      previewService: spring-boot-helloworld-preview
-      autoPromotionEnabled: false
+  strategy:                       # 升级策略
+    blueGreen:                    # 蓝绿部署
+      activeService: spring-boot-helloworld                   # 当前活动 service
+      previewService: spring-boot-helloworld-preview          # 新版 service
+      autoPromotionEnabled: false                             # 是否自动迁移流量
 ---
 kind: Service
 apiVersion: v1

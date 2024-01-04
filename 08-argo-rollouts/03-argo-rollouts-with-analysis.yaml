@@ -1,23 +1,23 @@
 # CopyRight: MageEdu <http://www.magedu.com>
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: AnalysisTemplate
+kind: AnalysisTemplate            # AnalysisTemplate 对象，rollouts 实例每隔一段事件，执行一次此模版，创建一个一次性的 Analysis 实例去 prometheus 获取以下指标数据，然后根据此指标数据来做继续滚动升级。
 metadata:
   name: success-rate
 spec:
   args:
   - name: service-name
-  metrics:
-  - name: success-rate
+  metrics:                                    # 指标声明
+  - name: success-rate                        # 成功率
     # NOTE: prometheus queries return results in the form of a vector.
     # So it is common to access the index 0 of the returned array to obtain the value
-    successCondition: result[0] >= 0.95
-    interval: 20s 
-    count: 3
-    failureLimit: 3
-    provider:
+    successCondition: result[0] >= 0.95       # 超过 95% 的成功率视为成功，计算公式 非5xx 响应 比上 全部请求响应，大于等于 0.95
+    interval: 20s                             # 指标抓取间隔
+    count: 3                                  # 抓取 3
+    failureLimit: 3                           # 如果连续三次指标抓取失败就不再查询
+    provider:                                 # 指标提供者声明
       prometheus:
-        address: http://prometheus.istio-system.svc.cluster.local:9090
+        address: http://prometheus.istio-system.svc.cluster.local:9090  # prometheus 服务访问入口
         query: |
           sum(irate(
             istio_requests_total{reporter="source",destination_service=~"{{args.service-name}}",response_code!~"5.*"}[1m]
@@ -45,12 +45,12 @@ spec:
             canarySubsetName: canary
             stableSubsetName: stable
       analysis:
-        templates:
+        templates:                      # 定义引用的 AnalysisTemplate 的列表
         - templateName: success-rate
-        args:
-        - name: service-name
-          # change this value to your service name
-          value: spring-boot-helloworld.demo.svc.cluster.local
+        args:                           # 查询参数声明
+        - name: service-name            #
+          # 将此值更改为您的服务名称
+          value: spring-boot-helloworld.demo.svc.cluster.local  # 会作为 指标查询的条件，交给 prometheus，表示查询那个服务的指标
         startingStep: 2
       steps:
       - setWeight: 5

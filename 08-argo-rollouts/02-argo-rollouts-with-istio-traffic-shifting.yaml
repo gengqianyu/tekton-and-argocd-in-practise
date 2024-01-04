@@ -8,22 +8,22 @@ spec:
   replicas: 10 
   strategy:
     canary:
-      trafficRouting:
-        istio:
-          virtualService: 
-            name: helloworld-rollout-vsvc        # required
+      trafficRouting:                         # 设定 Ingress Controller 或 ServiceMesh 如何动态调整配置以完成精细化地流量分割和流量迁移；
+        istio:                                # 声明使用的 istio 规则
+          virtualService:                     # istio VirtualService
+            name: helloworld-rollout-vsvc     # 必须声明 name
             routes:
-            - primary                 # optional if there is a single route in VirtualService, required otherwise
-          destinationRule:
-            name: helloworld-rollout-destrule    # required
-            canarySubsetName: canary  # required
-            stableSubsetName: stable  # required
-      steps:
-      - setCanaryScale:
-          matchTrafficWeight: true
-      - setWeight: 5
-      - pause: {duration: 1m}
-      - setWeight: 10
+            - primary                         # optional if there is a single route in VirtualService, required otherwise
+          destinationRule:                    # istio DestinationRule
+            name: helloworld-rollout-destrule # required 必选项
+            canarySubsetName: canary          # 金丝雀子集的名称  必选项
+            stableSubsetName: stable          # 稳定版本子集的名称 必选项
+      steps:                                  # 金丝雀更新的步骤
+      - setCanaryScale:                       # Pod 滚动策略
+          matchTrafficWeight: true            #
+      - setWeight: 5                          # 当前更新步骤的更新流量比例
+      - pause: {duration: 1m}                 # 更新完第一步后暂停的时长
+      - setWeight: 10                         #
       - pause: {duration: 1m}
       - pause: {duration: 20}
       - setWeight: 20
